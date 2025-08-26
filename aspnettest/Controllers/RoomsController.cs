@@ -14,7 +14,7 @@ namespace aspnettest.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class RoomsController : IRoomService
+    public class RoomsController : ControllerBase
     {
 
         public class Room
@@ -34,32 +34,30 @@ namespace aspnettest.Controllers
             new Room { Id = 5, Name = "202", Type = "Double", IsAvailable = true }
         };
 
-        /// <summary>
-        /// When using interfaces for the dependancy thing the normal method is no need
-        /// </summary>
-        /// <returns></returns>
-        //// GET: api/<RoomsController>
-        //[HttpGet]
-        //public ActionResult<IEnumerable<Room>> GetRooms()
-        //{
-        //    return Ok(Rooms);
-        //}
+        // GET: api/<RoomsController>
+        [HttpGet]
+        public ActionResult<IEnumerable<Room>> GetRooms()
+        {
+            return Ok(Rooms);
+        }
 
-        //// GET api/<RoomsController>/5
-        //[HttpGet("{id}")]
-        //public ActionResult<Room> GetRoomById(int id)
-        //{
-        //    var room = Rooms.Find(r => r.Id == id);
-        //    if (room == null)
-        //        return NotFound(new { Message = $"Room with Id {id} not found." });
+        // GET api/<RoomsController>/5
+        [HttpGet("{id}")]
+        public ActionResult<Room> GetRoomById(int id)
+        {
+            var room = Rooms.Find(r => r.Id == id);
+            if (room == null)
+                return NotFound(new { Message = $"Room with Id {id} not found." });
 
-        //    return Ok(room);
-        //}
+            return Ok(room);
+        }
 
-        public IEnumerable<Room> GetAllRooms() => Rooms;
+        /// Difficulty using interface for the bonus question
+        //public IEnumerable<Room> GetAllRooms() => Rooms;
 
-        public Room? GetRoomById(int id) => Rooms.FirstOrDefault(r => r.Id == id);
-
+        //public Room? GetRoomById(int id) => Rooms.FirstOrDefault(r => r.Id == id);
+        ///
+        
         //// POST api/<RoomsController>
         //[HttpPost]
         //public void Post([FromBody] string value)
